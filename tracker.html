@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Application Tracker — Darren Littlejohn</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 1100px; margin: 30px auto; padding: 0 20px; color: #222; }
+  h1 { font-size: 22px; border-bottom: 2px solid #0a66c2; padding-bottom: 8px; }
+  h2 { font-size: 16px; color: #0a66c2; margin-top: 28px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 12px; }
+  th, td { border: 1px solid #ddd; padding: 6px 8px; text-align: left; }
+  th { background: #f0f7ff; font-weight: bold; cursor: pointer; }
+  th:hover { background: #dbeafe; }
+  .qualified { background: #dcfce7; }
+  .not-qualified { background: #fee2e2; }
+  .built { font-weight: bold; color: #166534; }
+  .stats { display: flex; gap: 20px; flex-wrap: wrap; margin: 16px 0; }
+  .stat-box { background: #f0f7ff; border-radius: 8px; padding: 12px 16px; min-width: 120px; text-align: center; }
+  .stat-box .num { font-size: 28px; font-weight: bold; color: #0a66c2; }
+  .stat-box .label { font-size: 11px; color: #555; }
+  .filter-bar { margin: 12px 0; display: flex; gap: 10px; flex-wrap: wrap; }
+  .filter-bar select, .filter-bar input { padding: 6px 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; }
+  .analysis { background: #fefce8; border: 1px solid #fde68a; border-radius: 8px; padding: 16px; margin-top: 20px; }
+  .analysis h3 { margin-top: 0; color: #92400e; }
+  .analysis ul { margin: 8px 0; padding-left: 20px; }
+  .analysis li { margin: 4px 0; font-size: 13px; }
+</style>
+</head>
+<body>
+<h1>Application Tracker — Darren Littlejohn</h1>
+<p style="font-style:italic;color:#555;font-size:13px;">Tracking all job applications processed. Data updated as new jobs are processed. Last updated: November 7, 2026.</p>
+
+<div class="stats" id="stats"></div>
+
+<div class="filter-bar">
+  <select id="filterStatus" onchange="renderTable()">
+    <option value="all">All Statuses</option>
+    <option value="qualified">Qualified Only</option>
+    <option value="not-qualified">Not Qualified Only</option>
+  </select>
+  <select id="filterBuilt" onchange="renderTable()">
+    <option value="all">All Builds</option>
+    <option value="built">Built Only</option>
+    <option value="not-built">Not Built Only</option>
+  </select>
+  <input type="text" id="searchBox" placeholder="Search company or title..." oninput="renderTable()" style="width:200px;">
+</div>
+
+<table id="appTable">
+  <thead>
+    <tr>
+      <th onclick="sortTable('id')">ID</th>
+      <th onclick="sortTable('company')">Company</th>
+      <th onclick="sortTable('title')">Job Title</th>
+      <th onclick="sortTable('date')">Date</th>
+      <th onclick="sortTable('pre_fit')">Pre-Fit</th>
+      <th onclick="sortTable('post_fit')">Post-Fit</th>
+      <th onclick="sortTable('tier')">Tier</th>
+      <th>Qualified</th>
+      <th>Built</th>
+      <th>Salary</th>
+      <th>Remote</th>
+      <th>Easy Apply</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody id="tableBody"></tbody>
+</table>
+
+<div class="analysis">
+  <h3>Monthly Analysis — November 2026 (In Progress)</h3>
+  <ul>
+    <li><strong>Total processed:</strong> 9 jobs</li>
+    <li><strong>Qualified (>=80% post-tailoring):</strong> 3 (Dane Street Bill Review Specialist, LHH Billing Specialist, Stanford Medicine Authorization Coordinator)</li>
+    <li><strong>Not qualified:</strong> 6 (Modivcare Claims Analyst III, Henry Ford Insurance Specialist, Integra Connect AR Follow-up, EnableComp Coding Denials Auditor, RFX Partners Revenue Specialist, AgileGrid/CHRISTUS Data Specialist — qualified but not built)</li>
+    <li><strong>Built packages:</strong> 3 (Dane Street, LHH, Stanford Medicine Children's Health)</li>
+    <li><strong>Average pre-tailoring fit:</strong> 46%</li>
+    <li><strong>Average post-tailoring fit:</strong> 75%</li>
+    <li><strong>Average lift:</strong> +29 pts</li>
+  </ul>
+  <h3>Key Findings</h3>
+  <ul>
+    <li><strong>Production experience is the #1 blocker.</strong> Every not-qualified job failed because of "no production experience" in the specific domain (claims processing, insurance verification, billing platforms, coding). RCM coursework alone is not bridging the gap.</li>
+    <li><strong>Qualified jobs share a pattern:</strong> They require coursework-level knowledge (HIPAA, RCM, data analysis) rather than production experience. Dane Street (bill review), LHH (RCM billing), Stanford (authorization) all accepted coursework as transferable.</li>
+    <li><strong>Salary range:</strong> Qualified jobs range from $30-42/hr. Not-qualified jobs include both higher ($60-80K Modivcare) and lower ($18-22/hr Integra Connect) — salary is not the differentiator, domain experience is.</li>
+    <li><strong>Remote + Easy Apply jobs have higher applicant counts (77-100+)</strong> but also higher qualification rates when the role matches coursework-level requirements.</li>
+  </ul>
+  <h3>Recommendations (Preliminary)</h3>
+  <ul>
+    <li><strong>Target roles that accept coursework-level knowledge:</strong> Bill review, RCM billing analyst, authorization coordinator, claims processing (entry-level), patient access/member services.</li>
+    <li><strong>Avoid roles requiring production experience or certifications you don't have:</strong> Coding auditor (requires CPC/CCA/CCS), claims examiner (requires 5+ years), insurance agent (requires license).</li>
+    <li><strong>Consider entry-level patient access/member services roles</strong> as a side door — lower barrier, healthcare domain, can build production experience.</li>
+    <li><strong>Complete Medical Billing Specialist Certificate (Feb 1, 2027)</strong> and pass CPB exam — this will unlock higher-tier roles.</li>
+    <li><strong>Consider volunteer or contract work</strong> in billing/claims to build production experience that coursework alone cannot provide.</li>
+  </ul>
+</div>
+
+<script>
+const data = [
+  {"id":1,"company":"Modivcare","title":"Claims Analyst III","date":"2026-11-05","pre_fit":12,"post_fit":45,"tier":"C","qualified":false,"built":false,"salary":"$60,800-$80,000","remote":true,"easy_apply":false,"notes":"Claims production experience gap. Not qualified."},
+  {"id":2,"company":"AgileGrid/CHRISTUS Health","title":"Data Specialist I","date":"2026-11-05","pre_fit":40,"post_fit":80,"tier":"A","qualified":true,"built":false,"salary":"Not listed","remote":true,"easy_apply":false,"notes":"Qualified at threshold. Degree gap. Staffing agency route. Not built (user did not request build)."},
+  {"id":3,"company":"Dane Street","title":"Bill Review Specialist","date":"2026-11-07","pre_fit":40,"post_fit":80,"tier":"A","qualified":true,"built":true,"salary":"Not listed ($50-$100/hr est.)","remote":true,"easy_apply":true,"notes":"Built. Resume + CL generated. Experience gap disclosed in CL."},
+  {"id":4,"company":"Henry Ford Health","title":"Insurance Specialist","date":"2026-11-07","pre_fit":40,"post_fit":60,"tier":"B","qualified":false,"built":false,"salary":"Not listed","remote":true,"easy_apply":true,"notes":"Not qualified. 2 years production insurance verification gap + payor systems gap."},
+  {"id":5,"company":"LHH (Recruitment Solutions)","title":"Billing Specialist","date":"2026-11-07","pre_fit":80,"post_fit":100,"tier":"A","qualified":true,"built":true,"salary":"$30-$36/hr","remote":true,"easy_apply":true,"notes":"Built. Resume + CL generated. IDD/PDN specialization gap disclosed."},
+  {"id":6,"company":"Stanford Medicine Children's Health","title":"Authorization Coordinator","date":"2026-11-07","pre_fit":40,"post_fit":80,"tier":"A","qualified":true,"built":true,"salary":"$34.06-$42.57/hr","remote":true,"easy_apply":true,"notes":"Built. Resume + CL generated. 2 years production authorization experience gap disclosed."},
+  {"id":7,"company":"Integra Connect","title":"AR Follow-up Representative","date":"2026-11-07","pre_fit":29,"post_fit":79,"tier":"C","qualified":false,"built":false,"salary":"$18-$22/hr","remote":true,"easy_apply":true,"notes":"Not qualified (79%, just below threshold). 3 hard gaps: production billing, medical transport processes, PCR/CAD Sheet terminology."},
+  {"id":8,"company":"EnableComp","title":"Coding Denials Auditor","date":"2026-11-07","pre_fit":42,"post_fit":50,"tier":"C","qualified":false,"built":false,"salary":"Not listed","remote":true,"easy_apply":true,"notes":"Not qualified. Requires CPC/CCA/CCS/RHIT cert + 5 years orthopedic surgery billing. Far outside qualifications."},
+  {"id":9,"company":"RFX Partners, LLC","title":"Revenue Specialist","date":"2026-11-07","pre_fit":50,"post_fit":75,"tier":"B","qualified":false,"built":false,"salary":"Not listed","remote":true,"easy_apply":true,"notes":"Not qualified. Part-time, tiny company (2-10 employees), no salary listed. Finance/accounting gaps."}
+];
+
+let sortCol = 'id';
+let sortDir = 1;
+
+function renderTable() {
+  const statusFilter = document.getElementById('filterStatus').value;
+  const builtFilter = document.getElementById('filterBuilt').value;
+  const search = document.getElementById('searchBox').value.toLowerCase();
+  
+  let filtered = data.filter(r => {
+    if (statusFilter === 'qualified' && !r.qualified) return false;
+    if (statusFilter === 'not-qualified' && r.qualified) return false;
+    if (builtFilter === 'built' && !r.built) return false;
+    if (builtFilter === 'not-built' && r.built) return false;
+    if (search && !r.company.toLowerCase().includes(search) && !r.title.toLowerCase().includes(search)) return false;
+    return true;
+  });
+  
+  filtered.sort((a,b) => {
+    let va = a[sortCol], vb = b[sortCol];
+    if (typeof va === 'string') { va = va.toLowerCase(); vb = vb.toLowerCase(); }
+    if (va < vb) return -1 * sortDir;
+    if (va > vb) return 1 * sortDir;
+    return 0;
+  });
+  
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = filtered.map(r => `
+    <tr class="${r.qualified ? 'qualified' : 'not-qualified'}">
+      <td>${r.id}</td>
+      <td>${r.company}</td>
+      <td>${r.title}</td>
+      <td>${r.date}</td>
+      <td>${r.pre_fit}%</td>
+      <td>${r.post_fit}%</td>
+      <td>${r.tier}</td>
+      <td>${r.qualified ? 'Yes' : 'No'}</td>
+      <td class="${r.built ? 'built' : ''}">${r.built ? 'Yes' : 'No'}</td>
+      <td>${r.salary}</td>
+      <td>${r.remote ? 'Yes' : 'No'}</td>
+      <td>${r.easy_apply ? 'Yes' : 'No'}</td>
+      <td style="font-size:10px;">${r.notes}</td>
+    </tr>
+  `).join('');
+}
+
+function sortTable(col) {
+  if (sortCol === col) sortDir *= -1;
+  else { sortCol = col; sortDir = 1; }
+  renderTable();
+}
+
+// Stats
+const total = data.length;
+const qualified = data.filter(r => r.qualified).length;
+const built = data.filter(r => r.built).length;
+const avgPre = Math.round(data.reduce((s,r) => s + r.pre_fit, 0) / total);
+const avgPost = Math.round(data.reduce((s,r) => s + r.post_fit, 0) / total);
+const avgLift = Math.round(data.reduce((s,r) => s + (r.post_fit - r.pre_fit), 0) / total);
+
+document.getElementById('stats').innerHTML = `
+  <div class="stat-box"><div class="num">${total}</div><div class="label">Total Processed</div></div>
+  <div class="stat-box"><div class="num">${qualified}</div><div class="label">Qualified (>=80%)</div></div>
+  <div class="stat-box"><div class="num">${built}</div><div class="label">Packages Built</div></div>
+  <div class="stat-box"><div class="num">${avgPre}%</div><div class="label">Avg Pre-Tailoring</div></div>
+  <div class="stat-box"><div class="num">${avgPost}%</div><div class="label">Avg Post-Tailoring</div></div>
+  <div class="stat-box"><div class="num">+${avgLift}</div><div class="label">Avg Lift</div></div>
+`;
+
+renderTable();
+</script>
+</body>
+</html>
